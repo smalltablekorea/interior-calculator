@@ -691,6 +691,53 @@ input[type="number"] { -moz-appearance: textfield; }
   letter-spacing: -0.01em;
 }
 
+/* 곧 오픈 상태 - 비활성 카드 */
+.cta-card.coming-soon {
+  cursor: not-allowed;
+  opacity: 0.92;
+  position: relative;
+}
+
+.cta-card.coming-soon::before {
+  content: "🔜 5월 30일 (토) 오픈 예정";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--orange);
+  color: #1a0d05;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 18px;
+  border-radius: 0 0 8px 8px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.4);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 4px 12px rgba(255, 140, 66, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(255, 140, 66, 0.7); }
+}
+
+.cta-card.coming-soon:hover {
+  transform: none;
+  border-color: var(--green-border);
+}
+
+.cta-card-btn.disabled {
+  background: var(--bg-input);
+  color: var(--orange);
+  cursor: not-allowed;
+  border: 1px dashed var(--orange-border);
+  font-weight: 700;
+}
+
+.cta-card-btn.disabled:hover {
+  background: var(--bg-input);
+}
+
 .cta-card-badge {
   display: inline-flex;
   align-items: center;
@@ -997,9 +1044,9 @@ footer {
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-badge">1,294건 자재 데이터 기반 · 7년 현장 검증</div>
+    <div class="hero-badge">1,294건 자재 데이터 기반 · 현장 검증 완료</div>
     <h1>인테리어 자재 발주량,<br><span class="accent">30초만에</span></h1>
-    <p class="hero-sub">평수 한 번 입력으로 타일·도배·마루의 정확한 발주량과 박스/롤 수가 계산됩니다.<br>현장 경험으로 검증된 표준 로스율이 자동 적용됩니다.</p>
+    <p class="hero-sub">평수 한 번 입력으로 타일·도배·마루·페인트의 정확한 발주량과 조명·에어컨의 권장 사양까지 한 번에 계산됩니다.<br>현장 경험으로 검증된 표준값이 자동 적용됩니다.</p>
     <div class="hero-meta">
       <b>FREE</b><span class="dot"></span>회원가입 불필요<span class="dot"></span>오프라인 작동<span class="dot"></span>인쇄 가능
     </div>
@@ -1650,7 +1697,7 @@ footer {
     <div class="cta-grid">
 
       <!-- 인테리어코치 (Primary - 업체용 SaaS) -->
-      <a href="https://interior-coach.com" class="cta-card featured" target="_blank" rel="noopener">
+      <div class="cta-card featured coming-soon" id="interior-coach-card">
         <span class="cta-card-badge">🏗️ 업체 전용</span>
         <div class="cta-card-title"><span class="green">인테리어코치</span></div>
         <div class="cta-card-desc">인테리어 업체 전용 통합 관리 프로그램. 현장 정보 한 번 입력으로 견적·발주·공정·손익까지 한 번에.</div>
@@ -1659,9 +1706,9 @@ footer {
           <li>1,294건 자재 단가 DB 탑재</li>
           <li>자재발주 · 수금 · 인력풀 통합</li>
         </ul>
-        <span class="cta-card-btn">무료로 시작하기 →</span>
+        <span class="cta-card-btn disabled">⏳ 5월 30일 (토) 오픈 예정</span>
         <div class="cta-card-price">월 정액 · 초기 비용 없음</div>
-      </a>
+      </div>
 
       <!-- 견적코치 (Secondary - 견적서 검증) -->
       <a href="https://견적코치.com" class="cta-card" target="_blank" rel="noopener">
@@ -1692,7 +1739,7 @@ footer {
       </a>
 
       <!-- 마케팅 1:1 상담 (Quaternary - 신사업 입구) -->
-      <a href="#consultation" class="cta-card purple" target="_blank" rel="noopener" id="consult-card">
+      <a href="https://naver.me/xrzSlGlA" class="cta-card purple" target="_blank" rel="noopener" id="consult-card">
         <span class="cta-card-badge">🎯 1:1 상담</span>
         <div class="cta-card-title"><span class="purple">마케팅 상담</span></div>
         <div class="cta-card-desc">인테리어 업체 전용 마케팅 무료 상담. 현직 인테리어 업체 전문 마케팅 대표가 직접 상담 진행합니다.</div>
@@ -1731,7 +1778,7 @@ footer {
           </div>
         </div>
         <div class="footer-products">
-          <a href="https://interior-coach.com" target="_blank" rel="noopener">→ 인테리어코치</a>
+          <span style="color:var(--text-mute);cursor:not-allowed">→ 인테리어코치 <span style="color:var(--orange);font-size:10px;font-weight:700">[5/30 토 오픈]</span></span>
           <a href="https://견적코치.com" target="_blank" rel="noopener">→ 견적코치</a>
           <a href="https://open.kakao.com/o/gAgaeGui" target="_blank" rel="noopener">→ 오픈채팅방</a>
         </div>
@@ -1739,7 +1786,7 @@ footer {
     </div>
     <div class="footer-info">
       상호명: 스몰테이블 | 대표자명: 배다솜 | 사업자등록번호: 511-27-58367<br>
-      사업장 주소: 인천광역시 연수구 인천타워대로 301, A동 1301호 | 유선번호: 0507-1315-3173<br>
+      사업장 주소: 인천광역시 연수구 인천타워대로 301, A동 3014호 | 유선번호: 0507-1315-3173<br>
       통신판매업 신고번호: 2026-인천연수구-0926
     </div>
     <div class="footer-disclaimer">
