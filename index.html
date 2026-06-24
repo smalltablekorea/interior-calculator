@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>인테리어 자재 계산기 v2.3 — 타일·도배·마루·페인트·필름 발주량 무료 계산 | 스몰테이블</title>
-<meta name="description" content="평수만 입력하면 타일·도배·마루·페인트·필름·몰딩 발주량과 예상 자재비가 30초 안에 계산됩니다. 프로젝트 모드로 현장 전체 발주 리스트까지. 1,294건 자재 단가 DB 기반 무료 프로그램.">
+<title>인테리어 자재 계산기 v2.4 — 타일·도배·마루·페인트·필름 발주량 무료 계산 | 스몰테이블</title>
+<meta name="description" content="평수만 입력하면 타일·도배·마루·장판·페인트·필름·샷시·유리·상판 발주량과 예상 자재비가 30초 안에 계산됩니다. 프로젝트 모드로 현장 전체 발주 리스트까지. 1,294건 자재 단가 DB 기반 무료 프로그램.">
 <meta name="author" content="스몰테이블디자인그룹">
-<meta property="og:title" content="인테리어 자재 계산기 v2.3 — 발주량+예상 자재비 30초 계산">
+<meta property="og:title" content="인테리어 자재 계산기 v2.4 — 발주량+예상 자재비 30초 계산">
 <meta property="og:description" content="타일·도배·마루·페인트·필름·몰딩·실리콘. 프로젝트 모드로 현장 전체 발주 리스트 한 번에. 무료·회원가입 불필요.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -198,7 +198,7 @@ footer .small{color:#7F77DD;font-size:11px;margin-top:10px}
 </head>
 <body>
 <header><div class="wrap hd">
-  <div class="logo"><span class="mark">🏠</span> 스몰테이블 자재 계산기 <span class="v">v2.3</span></div>
+  <div class="logo"><span class="mark">🏠</span> 스몰테이블 자재 계산기 <span class="v">v2.4</span></div>
   <div class="hd-actions">
     <button class="hd-btn" onclick="shareLink()">🔗 공유</button>
     <button class="hd-btn" onclick="window.print()">🖨️ 인쇄</button>
@@ -237,6 +237,11 @@ footer .small{color:#7F77DD;font-size:11px;margin-top:10px}
     <button class="chip" data-t="door"><span class="ic">🚪</span>도어</button>
     <button class="chip" data-t="light"><span class="ic">💡</span>조명</button>
     <button class="chip" data-t="ac"><span class="ic">❄️</span>에어컨</button>
+    <button class="chip" data-t="janpan"><span class="ic">🟫</span>장판</button>
+    <button class="chip" data-t="glass"><span class="ic">🪟</span>유리</button>
+    <button class="chip" data-t="gblock"><span class="ic">🧊</span>유리블럭</button>
+    <button class="chip" data-t="sash"><span class="ic">🪟</span>샷시</button>
+    <button class="chip" data-t="stone"><span class="ic">🪨</span>세라믹·칸스톤</button>
   </div>
 
   <!-- ════ 타일 ════ -->
@@ -561,6 +566,157 @@ footer .small{color:#7F77DD;font-size:11px;margin-top:10px}
       <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=ac" target="_blank" rel="noopener">이 사양으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
     </div>
   </section>
+
+  <!-- ════ 장판 (NEW v2.4) ════ -->
+  <section class="panel" id="p-janpan">
+    <div class="card">
+      <h3>📝 입력 정보 <span class="tag">장판</span></h3>
+      <div class="field"><label>장판 두께</label>
+        <select id="jp_type"><option value="1.8" selected>1.8T 모노륨 (전월세·임대 표준)</option><option value="2.2">2.2T 펫·중급</option><option value="2.7">2.7T 고급 모노륨</option><option value="4.5">4.5T 럭셔리·헤링본</option></select>
+        <div class="hint">두께가 두꺼울수록 쿠션감·내구성·단가 ↑</div></div>
+      <div class="field"><label>시공 평수</label><input type="number" id="jp_py" value="24" min="0" step="0.5"></div>
+      <div class="field"><label>장판 폭</label>
+        <select id="jp_w"><option value="1.8" selected>1.8m 폭 (광폭)</option><option value="2.2">2.2m 폭</option></select>
+        <div class="hint">롤 단위 시공. 폭에 따라 이음매·로스 달라짐</div></div>
+      <div class="field"><label>로스율 (%)</label><input type="number" id="jp_loss" value="10" min="0"><div class="hint">권장: 직사각형 방 8% · 복잡한 구조·헤링본 12~15%</div></div>
+    </div>
+    <div class="card result">
+      <h3>📊 계산 결과</h3>
+      <div class="big"><div class="lbl">발주 권장 길이</div><div class="num" id="jp_r_main">—<small>m</small></div><div class="note" id="jp_r_note">로스 포함 · 롤 단위</div></div>
+      <div class="kv">
+        <div class="it"><span>시공 면적</span><b id="jp_r_a">—㎡</b></div>
+        <div class="it"><span>시공 평수</span><b id="jp_r_p">—평</b></div>
+        <div class="it"><span>순수 필요 길이</span><b id="jp_r_n">—m</b></div>
+        <div class="it"><span>장판 폭</span><b id="jp_r_w">—m</b></div>
+      </div>
+      <div class="cost"><div class="lbl">예상 자재비 (장판만)</div><div class="num" id="jp_r_c">—</div><div class="src">시장 추정 범위 · 정확한 단가는 인테리어코치 자재 DB 1,294건 기준</div></div>
+      <div class="memo"><b>현장 메모</b> · 장판은 시공 전 바닥 평탄작업(퍼티) 필요 시 별도. 친환경 등급(SE0)·난방 적합 여부 확인. 이음매는 방 긴 방향으로 최소화하세요.</div>
+      <div class="r-actions"><button class="r-btn" onclick="copyResult('janpan')">📋 결과 복사</button><button class="r-btn" onclick="shareLink()">🔗 공유 링크</button><button class="r-btn" onclick="window.print()">🖨️ 인쇄</button></div>
+      <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=janpan" target="_blank" rel="noopener">이 수량으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
+    </div>
+  </section>
+
+  <!-- ════ 유리 (NEW v2.4) ════ -->
+  <section class="panel" id="p-glass">
+    <div class="card">
+      <h3>📝 입력 정보 <span class="tag">유리</span></h3>
+      <div class="field"><label>유리 종류</label>
+        <select id="gl_type"><option value="clear5">투명 5T</option><option value="clear8" selected>투명 8T (강화 전 표준)</option><option value="clear10">투명 10T (대형·파티션)</option><option value="tempered">강화유리 (안전·도어)</option><option value="pair">복층유리 (단열·창호)</option></select></div>
+      <div class="field"><label>면적 입력 방식</label>
+        <select id="gl_mode" onchange="ui()"><option value="wh" selected>가로 × 세로 (mm)</option><option value="m2">면적 (㎡)</option></select></div>
+      <div class="field row2" id="gl_wh_f">
+        <div><label>가로 (mm)</label><input type="number" id="gl_w" value="1200"></div>
+        <div><label>세로 (mm)</label><input type="number" id="gl_h" value="2400"></div></div>
+      <div class="field" id="gl_a_f" style="display:none"><label>총 면적 (㎡)</label><input type="number" id="gl_a" value="3" min="0" step="0.1"></div>
+      <div class="field"><label>장(EA) 수</label><input type="number" id="gl_n" value="1" min="1"><div class="hint">동일 규격 여러 장이면 수량 입력</div></div>
+    </div>
+    <div class="card result">
+      <h3>📊 계산 결과</h3>
+      <div class="big"><div class="lbl">총 발주 면적</div><div class="num" id="gl_r_main">—<small>㎡</small></div><div class="note" id="gl_r_note">최소 발주 면적 반영</div></div>
+      <div class="kv">
+        <div class="it"><span>장당 면적</span><b id="gl_r_per">—㎡</b></div>
+        <div class="it"><span>수량</span><b id="gl_r_n">—장</b></div>
+      </div>
+      <div class="cost"><div class="lbl">예상 자재비 (유리만)</div><div class="num" id="gl_r_c">—</div><div class="src">시장 추정 범위 · 정확한 단가는 인테리어코치 자재 DB 1,294건 기준</div></div>
+      <div class="memo"><b>현장 메모</b> · 유리는 통상 ㎡당 단가에 <b>최소 발주 면적</b>(보통 0.5~1㎡)이 적용됩니다. 강화·도어용은 모서리 가공(면취)·타공이 별도. 운반·시공 난이도에 따라 비용 차이가 큽니다.</div>
+      <div class="r-actions"><button class="r-btn" onclick="copyResult('glass')">📋 결과 복사</button><button class="r-btn" onclick="shareLink()">🔗 공유 링크</button><button class="r-btn" onclick="window.print()">🖨️ 인쇄</button></div>
+      <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=glass" target="_blank" rel="noopener">이 수량으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
+    </div>
+  </section>
+
+  <!-- ════ 유리블럭 (NEW v2.4) ════ -->
+  <section class="panel" id="p-gblock">
+    <div class="card">
+      <h3>📝 입력 정보 <span class="tag">유리블럭</span></h3>
+      <div class="field"><label>면적 입력 방식</label>
+        <select id="gb_mode" onchange="ui()"><option value="wh" selected>벽 가로 × 세로 (m)</option><option value="m2">면적 (㎡)</option></select></div>
+      <div class="field row2" id="gb_wh_f">
+        <div><label>가로 (m)</label><input type="number" id="gb_w" value="2" step="0.1"></div>
+        <div><label>세로 (m)</label><input type="number" id="gb_h" value="2.4" step="0.1"></div></div>
+      <div class="field" id="gb_a_f" style="display:none"><label>시공 면적 (㎡)</label><input type="number" id="gb_a" value="4.8" min="0" step="0.1"></div>
+      <div class="field"><label>블럭 규격 (mm)</label>
+        <select id="gb_size"><option value="190">190 × 190 (표준)</option><option value="190x90">190 × 90 (하프)</option><option value="240">240 × 240 (대형)</option></select>
+        <div class="hint">줄눈 약 10mm 포함하여 1㎡당 매수 자동 계산</div></div>
+      <div class="field"><label>로스율 (%)</label><input type="number" id="gb_loss" value="5" min="0"><div class="hint">권장: 직선 5% · 곡면·코너 많음 8%</div></div>
+    </div>
+    <div class="card result">
+      <h3>📊 계산 결과</h3>
+      <div class="big"><div class="lbl">발주 권장 매수</div><div class="num" id="gb_r_main">—<small>개</small></div><div class="note">로스 포함</div></div>
+      <div class="kv">
+        <div class="it"><span>시공 면적</span><b id="gb_r_a">—㎡</b></div>
+        <div class="it"><span>㎡당 매수</span><b id="gb_r_per">—개</b></div>
+        <div class="it"><span>전용 몰탈·스페이서</span><b id="gb_r_set">—식</b></div>
+        <div class="it"><span>보강 철근</span><b id="gb_r_bar">—m</b></div>
+      </div>
+      <div class="cost"><div class="lbl">예상 자재비 (블럭만)</div><div class="num" id="gb_r_c">—</div><div class="src">시장 추정 범위 · 정확한 단가는 인테리어코치 자재 DB 1,294건 기준</div></div>
+      <div class="memo"><b>현장 메모</b> · 유리블럭은 전용 몰탈·스페이서·보강철근(가로 줄눈마다)이 필수 부자재입니다. 한 번에 쌓는 높이 제한(1일 약 4~5단)이 있어 공기 산정에 반영하세요.</div>
+      <div class="r-actions"><button class="r-btn" onclick="copyResult('gblock')">📋 결과 복사</button><button class="r-btn" onclick="shareLink()">🔗 공유 링크</button><button class="r-btn" onclick="window.print()">🖨️ 인쇄</button></div>
+      <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=gblock" target="_blank" rel="noopener">이 수량으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
+    </div>
+  </section>
+
+  <!-- ════ 샷시 (NEW v2.4) ════ -->
+  <section class="panel" id="p-sash">
+    <div class="card">
+      <h3>📝 입력 정보 <span class="tag">샷시(창호)</span></h3>
+      <div class="field"><label>샷시 종류</label>
+        <select id="sa_type"><option value="single">단창 (PVC, 보조·발코니)</option><option value="pair_pvc" selected>이중창 PVC (거실·방 표준)</option><option value="pair_alu">이중창 알루미늄</option><option value="system">시스템 창호 (고단열)</option></select></div>
+      <div class="field"><label>면적 입력 방식</label>
+        <select id="sa_mode" onchange="ui()"><option value="list" selected>창별 가로×세로 합산</option><option value="m2">총 면적 (㎡) 직접</option></select></div>
+      <div id="sa_list_f">
+        <div class="field"><label>창 개수</label><input type="number" id="sa_n" value="3" min="1" max="20" onchange="renderSashRows()" oninput="renderSashRows()"></div>
+        <div id="sa_rows"></div>
+      </div>
+      <div class="field" id="sa_a_f" style="display:none"><label>총 창호 면적 (㎡)</label><input type="number" id="sa_a" value="12" min="0" step="0.5"></div>
+    </div>
+    <div class="card result">
+      <h3>📊 계산 결과</h3>
+      <div class="big"><div class="lbl">총 창호 면적</div><div class="num" id="sa_r_main">—<small>㎡</small></div><div class="note">최소 발주 면적(창당 1㎡) 반영</div></div>
+      <div class="kv">
+        <div class="it"><span>창 개수</span><b id="sa_r_n">—개</b></div>
+        <div class="it"><span>종류</span><b id="sa_r_t">—</b></div>
+      </div>
+      <div class="cost"><div class="lbl">예상 자재비 (창호 · 시공 포함 추정)</div><div class="num" id="sa_r_c">—</div><div class="src">㎡당 시공 포함 단가 기준 · 정확한 견적은 인테리어코치 자재 DB 1,294건</div></div>
+      <div class="memo"><b>현장 메모</b> · 샷시는 ㎡당 단가에 시공·철거·실리콘 마감이 통상 포함됩니다. 발코니 확장·외부 비계 필요 시 별도. 실측은 외경(벽체 개구부) 기준으로 하세요. 에너지소비효율등급도 확인.</div>
+      <div class="r-actions"><button class="r-btn" onclick="copyResult('sash')">📋 결과 복사</button><button class="r-btn" onclick="shareLink()">🔗 공유 링크</button><button class="r-btn" onclick="window.print()">🖨️ 인쇄</button></div>
+      <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=sash" target="_blank" rel="noopener">이 사양으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
+    </div>
+  </section>
+
+  <!-- ════ 세라믹·칸스톤·인조대리석 (NEW v2.4) ════ -->
+  <section class="panel" id="p-stone">
+    <div class="card">
+      <h3>📝 입력 정보 <span class="tag">세라믹·칸스톤·인조대리석</span></h3>
+      <div class="field"><label>상판 종류</label>
+        <select id="st_type"><option value="ceramic" selected>세라믹 (고경도·내열·고급)</option><option value="kahnstone">칸스톤 (엔지니어드 스톤)</option><option value="marble">인조대리석 (아크릴·경제형)</option></select>
+        <div class="hint">주방 상판·아일랜드·식탁·세면대 상판 등</div></div>
+      <div class="field"><label>적용 부위</label>
+        <select id="st_part" onchange="ui()"><option value="counter" selected>주방 상판 (ㄱ자/일자)</option><option value="custom">직접 면적 입력</option></select></div>
+      <div id="st_counter_f">
+        <div class="field row2">
+          <div><label>상판 길이 합 (mm)</label><input type="number" id="st_len" value="3600"><div class="hint">ㄱ자면 두 변 합</div></div>
+          <div><label>상판 깊이 (mm)</label><input type="number" id="st_dep" value="600"></div>
+        </div>
+        <div class="field"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="st_back" checked style="width:17px;height:17px;accent-color:var(--blue)"> 백스플래시 포함 (높이 50mm)</label></div>
+      </div>
+      <div class="field" id="st_a_f" style="display:none"><label>총 면적 (㎡)</label><input type="number" id="st_a" value="2.5" min="0" step="0.1"></div>
+      <div class="field"><label>로스·가공 여유 (%)</label><input type="number" id="st_loss" value="15" min="0"><div class="hint">권장: 직선 10% · 싱크볼·홀 가공·코너 15~20%</div></div>
+    </div>
+    <div class="card result">
+      <h3>📊 계산 결과</h3>
+      <div class="big"><div class="lbl">발주 권장 면적</div><div class="num" id="st_r_main">—<small>㎡</small></div><div class="note" id="st_r_note">로스·가공 포함</div></div>
+      <div class="kv">
+        <div class="it"><span>상판 순면적</span><b id="st_r_a">—㎡</b></div>
+        <div class="it"><span>백스플래시</span><b id="st_r_back">—㎡</b></div>
+        <div class="it"><span>판재(3050×1440) 환산</span><b id="st_r_slab">—장</b></div>
+        <div class="it"><span>적용 부위</span><b id="st_r_part">—</b></div>
+      </div>
+      <div class="cost"><div class="lbl">예상 자재비 (상판 · 가공 포함 추정)</div><div class="num" id="st_r_c">—</div><div class="src">㎡당 가공·시공 포함 추정 · 정확한 단가는 인테리어코치 자재 DB 1,294건</div></div>
+      <div class="memo"><b>현장 메모</b> · 세라믹·칸스톤은 판재(슬라브) 단위로 재단되어 자투리 손실이 큽니다. 싱크볼 언더마운트·홀 타공·물막이 가공은 추가 비용. 실측 후 정확 견적은 석재상 확인 필수.</div>
+      <div class="r-actions"><button class="r-btn" onclick="copyResult('stone')">📋 결과 복사</button><button class="r-btn" onclick="shareLink()">🔗 공유 링크</button><button class="r-btn" onclick="window.print()">🖨️ 인쇄</button></div>
+      <a class="order-cta" href="https://www.interiorcoach.co.kr/auth/signup?utm_source=calculator&utm_medium=cta_order&utm_campaign=calc_v2&utm_content=stone" target="_blank" rel="noopener">이 사양으로 발주서 만들기 → 인테리어코치<span>1,294건 단가 DB로 발주서 1분 완성 · 14일 무료</span></a>
+    </div>
+  </section>
   </div><!-- /single-area -->
 
   <!-- ════ 프로젝트 모드 ════ -->
@@ -694,15 +850,15 @@ footer .small{color:#7F77DD;font-size:11px;margin-top:10px}
         <div class="b-tag">META ADS PLAYBOOK · v2.0</div>
         <h4>인테리어 업체 전용<br>메타 퍼포먼스 광고 전략집</h4>
         <p>세팅 매뉴얼이 아닌 의사결정 프레임워크. 리드젠 퍼널 설계, MAX CPA 역산, 1-1-1 → ABO → CBO 스케일링, 크리에이티브 아이디어 20선까지 — 대표·실장·디자이너가 함께 보는 데이터 드리븐 플레이북.</p>
-        <div class="b-meta">PDF · 34페이지 · 2026년 6월 기준 · Meta 공식 문서 및 글로벌 벤치마크 기반</div>
-        <a class="b-dl" href="/ebooks/meta-ads-playbook.pdf" download="스몰테이블_메타퍼포먼스_광고전략집_v2.pdf">📥 무료 다운로드 (PDF)</a>
+        <div class="b-meta">PDF 34페이지 · 2026년 6월 기준 · 메일 신청 시 24시간 내 발송</div>
+        <a class="b-dl" href="mailto:smalltablekorea@gmail.com?subject=[전자책 신청] 메타 광고 전략집&body=안녕하세요, 메타 퍼포먼스 광고 전략집 PDF를 신청합니다." onclick="toast('메일 앱이 열립니다')">📥 무료 신청 (메일)</a>
       </div>
       <div class="book">
         <div class="b-tag">AI VISUAL GUIDEBOOK</div>
         <h4>힉스필드 슈퍼컴퓨터<br>인테리어 AI 활용 바이블</h4>
         <p>3D 렌더링 며칠 기다리지 마세요. 텍스트 한 줄로 실사 시안, 시안 한 장으로 워크스루 숏폼 영상까지. 무드보드·프로모션 그래픽·릴스 캘린더·실전 프롬프트 백과사전 수록.</p>
-        <div class="b-meta">PDF · 20페이지 · 디자이너·대표·현장 실장용 실전 매뉴얼</div>
-        <a class="b-dl" href="/ebooks/higgsfield-ai-guide.pdf" download="스몰테이블_힉스필드_인테리어AI_가이드.pdf">📥 무료 다운로드 (PDF)</a>
+        <div class="b-meta">PDF 20페이지 · 디자이너·대표·현장 실장용 · 메일 신청 시 24시간 내 발송</div>
+        <a class="b-dl" href="mailto:smalltablekorea@gmail.com?subject=[전자책 신청] 힉스필드 AI 가이드&body=안녕하세요, 힉스필드 인테리어 AI 활용 가이드 PDF를 신청합니다." onclick="toast('메일 앱이 열립니다')">📥 무료 신청 (메일)</a>
       </div>
     </div>
   </section>
@@ -767,6 +923,11 @@ const COST={
   door:{abs_door:[120000,200000],abs_full:[250000,450000],mem_door:[150000,250000],mem_full:[300000,500000],slide_door:[350000,700000],slide_full:[500000,900000]},
   dl10:[8000,18000],
   gypsum:[4500,7000], daruki:[2500,4500], pin_box:[8000,15000], glue:[4000,8000],
+  janpan_py:{'1.8':[7000,11000],'2.2':[9000,14000],'2.7':[13000,20000],'4.5':[22000,38000]},
+  glass_m2:{'clear5':[18000,30000],'clear8':[28000,45000],'clear10':[38000,60000],'pair':[45000,75000],'tempered':[55000,90000]},
+  gblock_ea:[6000,12000],
+  sash_m2:{'single':[90000,140000],'pair_pvc':[160000,240000],'pair_alu':[220000,340000],'system':[350000,550000]},
+  stone_m2:{'ceramic':[120000,200000],'kahnstone':[180000,280000],'marble':[90000,160000]},
   labor:{wall_day:[250000,300000], floor_py:[15000,25000], floor_tile_m2:[25000,40000], bath_ea:[700000,1100000], film_m2:[25000,40000], door_ea:[50000,80000], light_ea:[15000,30000]}
 };
 let RES={}; // 복사용 텍스트 저장
@@ -780,6 +941,15 @@ function ui(){
   $('wd_a_f').style.display=$('wd_mode').value==='m2'?'':'none';
   $('pt_py_f').style.display=$('pt_part').value==='direct'?'none':'';
   $('pt_d_f').style.display=$('pt_part').value==='direct'?'':'none';
+  $('gl_wh_f').style.display=$('gl_mode').value==='wh'?'grid':'none';
+  $('gl_a_f').style.display=$('gl_mode').value==='m2'?'':'none';
+  $('gb_wh_f').style.display=$('gb_mode').value==='wh'?'grid':'none';
+  $('gb_a_f').style.display=$('gb_mode').value==='m2'?'':'none';
+  $('sa_list_f').style.display=$('sa_mode').value==='list'?'':'none';
+  $('sa_a_f').style.display=$('sa_mode').value==='m2'?'':'none';
+  $('st_counter_f').style.display=$('st_part').value==='counter'?'':'none';
+  $('st_a_f').style.display=$('st_part').value==='custom'?'':'none';
+  renderSashRows();
   calcAll();
 }
 
@@ -920,6 +1090,116 @@ function calcWood(){
   $('wd_r_c').textContent=range(lo,hi);
   RES.wood=`[목공 발주] 시공 ${area.toFixed(1)}㎡ / 석고보드 ${layers}P ${boards}장 (로스 ${v('wd_loss')}%) / 다루끼 ${daruki}본 + 타카핀 ${pins}박스 + 본드 ${glue}통 / 예상 자재비 ${range(lo,hi)}`;
 }
+/* ── 장판 (v2.4) ── */
+function calcJanpan(){
+  const py=v('jp_py'); if(!py)return;
+  const area=py*PY, w=parseFloat($('jp_w').value);
+  const pureLen=area/w, orderLen=Math.ceil(pureLen*(1+v('jp_loss')/100));
+  $('jp_r_main').innerHTML=fmt(orderLen)+'<small>m</small>';
+  $('jp_r_a').textContent=area.toFixed(1)+'㎡'; $('jp_r_p').textContent=py+'평';
+  $('jp_r_n').textContent=pureLen.toFixed(1)+'m'; $('jp_r_w').textContent=w+'m';
+  const cr=COST.janpan_py[$('jp_type').value];
+  const c=[py*cr[0],py*cr[1]];
+  $('jp_r_c').textContent=range(c[0],c[1]);
+  RES.janpan=`[장판 발주] ${py}평 (${$('jp_type').selectedOptions[0].text.split(' ')[0]}) / 폭 ${w}m 기준 ${orderLen}m (로스 ${v('jp_loss')}%) / 예상 자재비 ${range(c[0],c[1])}`;
+}
+
+/* ── 유리 (v2.4) ── */
+function calcGlass(){
+  const n=Math.max(1,Math.ceil(v('gl_n')));
+  let per;
+  if($('gl_mode').value==='wh'){per=(v('gl_w')*v('gl_h'))/1e6;}
+  else{per=v('gl_a')/n;}
+  if(!per||per<=0)return;
+  const MIN=0.5; /* 최소 발주 면적 */
+  const billPer=Math.max(per,MIN);
+  const total=billPer*n;
+  $('gl_r_main').innerHTML=total.toFixed(2)+'<small>㎡</small>';
+  $('gl_r_note').textContent=per<MIN?'최소 발주 '+MIN+'㎡/장 적용됨':'장당 면적 기준';
+  $('gl_r_per').textContent=per.toFixed(2)+'㎡'; $('gl_r_n').textContent=n+'장';
+  const cr=COST.glass_m2[$('gl_type').value];
+  const c=[total*cr[0],total*cr[1]];
+  $('gl_r_c').textContent=range(c[0],c[1]);
+  RES.glass=`[유리 발주] ${$('gl_type').selectedOptions[0].text} / 장당 ${per.toFixed(2)}㎡ × ${n}장 = ${total.toFixed(2)}㎡ / 예상 자재비 ${range(c[0],c[1])}`;
+}
+
+/* ── 유리블럭 (v2.4) ── */
+function calcGblock(){
+  let area;
+  if($('gb_mode').value==='wh'){area=v('gb_w')*v('gb_h');}else{area=v('gb_a');}
+  if(!area)return;
+  /* 줄눈 10mm 포함 1개 점유 면적 */
+  const perAreaMap={'190':(0.2*0.2),'190x90':(0.2*0.1),'240':(0.25*0.25)};
+  const unitArea=perAreaMap[$('gb_size').value];
+  const perM2=1/unitArea;
+  const pure=Math.ceil(area/unitArea);
+  const ea=Math.ceil(pure*(1+v('gb_loss')/100));
+  $('gb_r_main').innerHTML=fmt(ea)+'<small>개</small>';
+  $('gb_r_a').textContent=area.toFixed(1)+'㎡'; $('gb_r_per').textContent=Math.round(perM2)+'개';
+  $('gb_r_set').textContent=Math.ceil(area/2)+'식';
+  const bar=$('gb_mode').value==='wh'?Math.ceil(v('gb_w')*(v('gb_h')/0.2)):Math.ceil(Math.sqrt(area)*Math.sqrt(area)/0.2);
+  $('gb_r_bar').textContent=bar+'m';
+  const c=[ea*COST.gblock_ea[0],ea*COST.gblock_ea[1]];
+  $('gb_r_c').textContent=range(c[0],c[1]);
+  RES.gblock=`[유리블럭 발주] 시공 ${area.toFixed(1)}㎡ / ${$('gb_size').selectedOptions[0].text.split(' ')[0]}mm ${ea}개 (로스 ${v('gb_loss')}%) + 전용몰탈·스페이서 + 보강철근 약 ${bar}m / 예상 자재비(블럭만) ${range(c[0],c[1])}`;
+}
+
+/* ── 샷시 (v2.4) ── */
+function renderSashRows(){
+  const wrap=$('sa_rows'); if(!wrap)return;
+  const n=Math.max(1,Math.min(20,Math.ceil(v('sa_n')||1)));
+  const cur=wrap.querySelectorAll('.sash-row').length;
+  if(cur!==n){
+    let html='';
+    for(let i=0;i<n;i++){
+      const w=wrap.querySelector('#sa_w'+i)?.value||1500;
+      const ht=wrap.querySelector('#sa_h'+i)?.value||1200;
+      html+=`<div class="sash-row field row2" style="margin-bottom:8px"><div><label>창 ${i+1} 가로(mm)</label><input type="number" id="sa_w${i}" value="${w}" oninput="calcAll()"></div><div><label>세로(mm)</label><input type="number" id="sa_h${i}" value="${ht}" oninput="calcAll()"></div></div>`;
+    }
+    wrap.innerHTML=html;
+  }
+}
+function calcSash(){
+  const type=$('sa_type').value;
+  let total=0,n=0;
+  if($('sa_mode').value==='list'){
+    n=Math.max(1,Math.min(20,Math.ceil(v('sa_n')||1)));
+    for(let i=0;i<n;i++){
+      const w=v('sa_w'+i),ht=v('sa_h'+i);
+      if(w&&ht)total+=Math.max((w*ht)/1e6,1); /* 창당 최소 1㎡ */
+    }
+  }else{total=v('sa_a');n=Math.max(1,Math.round(total/2.5));}
+  if(!total)return;
+  $('sa_r_main').innerHTML=total.toFixed(1)+'<small>㎡</small>';
+  $('sa_r_n').textContent=n+'개'; $('sa_r_t').textContent=$('sa_type').selectedOptions[0].text.split(' (')[0];
+  const cr=COST.sash_m2[type];
+  const c=[total*cr[0],total*cr[1]];
+  $('sa_r_c').textContent=range(c[0],c[1]);
+  RES.sash=`[샷시 발주] ${$('sa_type').selectedOptions[0].text.split(' (')[0]} / 창 ${n}개 · 총 ${total.toFixed(1)}㎡ / 예상 비용(시공 포함 추정) ${range(c[0],c[1])}`;
+}
+
+/* ── 세라믹·칸스톤·인조대리석 (v2.4) ── */
+function calcStone(){
+  let area,back=0;
+  if($('st_part').value==='counter'){
+    area=(v('st_len')*v('st_dep'))/1e6;
+    if($('st_back').checked)back=(v('st_len')*50)/1e6;
+  }else{area=v('st_a');}
+  const net=area+back;
+  if(!net)return;
+  const order=net*(1+v('st_loss')/100);
+  const SLAB=3.05*1.44; /* 표준 슬라브 면적 */
+  const slabs=Math.ceil(order/SLAB*10)/10;
+  $('st_r_main').innerHTML=order.toFixed(2)+'<small>㎡</small>';
+  $('st_r_note').textContent='로스·가공 '+v('st_loss')+'% 포함';
+  $('st_r_a').textContent=area.toFixed(2)+'㎡'; $('st_r_back').textContent=back?back.toFixed(2)+'㎡':'미포함';
+  $('st_r_slab').textContent=slabs+'장'; $('st_r_part').textContent=$('st_part').selectedOptions[0].text.split(' (')[0];
+  const cr=COST.stone_m2[$('st_type').value];
+  const c=[order*cr[0],order*cr[1]];
+  $('st_r_c').textContent=range(c[0],c[1]);
+  RES.stone=`[상판 발주] ${$('st_type').selectedOptions[0].text.split(' (')[0]} / 순면적 ${area.toFixed(2)}㎡${back?' + 백스플래시 '+back.toFixed(2)+'㎡':''} → 발주 ${order.toFixed(2)}㎡ (로스 ${v('st_loss')}%, 슬라브 약 ${slabs}장) / 예상 비용(가공 포함 추정) ${range(c[0],c[1])}`;
+}
+
 function calcLight(){
   const py=v('l_py'); if(!py)return;
   const lux=parseInt($('l_type').value);
@@ -948,7 +1228,7 @@ function calcAC(){
   $('a_r_p').textContent=py+'평';
   RES.ac=`[에어컨 사양] 시공 ${py}평 / 필요 냉방 ${fmt(kcal)}kcal/h / 거실 스탠드 ${standPy}평형 1대 + 방 벽걸이 ${rooms}대 (실내기 합계 ${total}대)`;
 }
-function calcAll(){calcTile();calcWall();calcFloor();calcWood();calcPaint();calcFilm();calcMold();calcSili();calcDoor();calcLight();calcAC();calcProj();updateOrderLinks();savePrices();}
+function calcAll(){calcTile();calcWall();calcFloor();calcWood();calcPaint();calcFilm();calcMold();calcSili();calcDoor();calcLight();calcAC();calcJanpan();calcGlass();calcGblock();calcSash();calcStone();calcProj();updateOrderLinks();savePrices();}
 
 /* ── 프로젝트 모드 ── */
 function calcProj(){
@@ -1038,7 +1318,7 @@ function calcProj(){
   $('pj_r_py').textContent=py+'평 · 천장 '+h+'m 기준 · 로스 포함 발주량';
   RES.proj=`[통합 발주 리스트] ${nm?nm+' · ':''}${py}평 (천장 ${h}m)\n`+rows.map(r=>`- ${r.name}: ${r.qty}${r.c?' / 예상 '+range(r.c[0],r.c[1]):''}`).join('\n')+`\n자재비 소계: ${range(lo,hi)} (자재만)`
     +(labors.length?`\n\n[인건비 추정 · 참고]\n`+labors.map(r=>`- ${r.name} (${r.desc}): ${range(r.c[0],r.c[1])}`).join('\n')+`\n인건비 소계: ${range(llo,lhi)}\n자재+인건비 총계: ${range(lo+llo,hi+lhi)}`:'')
-    +`\n— 스몰테이블 자재 계산기 v2.3`;
+    +`\n— 스몰테이블 자재 계산기 v2.4`;
   /* ── ① 인테리어코치 발주 페이로드 (구조화) ── */
   PROJ_PAYLOAD={v:1,src:'calc',type:'project',site:nm||null,py,ceil_h:h,
     items:rows.map(r=>({name:r.name,qty:r.qty,est_lo:r.c?Math.round(r.c[0]):null,est_hi:r.c?Math.round(r.c[1]):null})),
